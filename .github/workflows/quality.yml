@@ -41,6 +41,8 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 30
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - uses: actions/upload-artifact@v4
         if: success()
         with:
