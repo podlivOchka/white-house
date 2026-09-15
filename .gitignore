@@ -1,4 +1,5 @@
 node_modules/
+.netlify/
 dist/
 playwright-report/
 playwright-report-pages/
