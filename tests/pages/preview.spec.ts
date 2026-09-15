@@ -1,5 +1,5 @@
 import {test,expect} from "@playwright/test";
-const prefix="/white-house-kaspiysk/";
+const prefix="/white-house/";
 test("published directory supports photos, navigation, cart and refresh",async({page},testInfo)=>{
  const failures:string[]=[];
  page.on("pageerror",error=>failures.push(error.message));
@@ -10,7 +10,7 @@ test("published directory supports photos, navigation, cart and refresh",async({
  for(const img of await page.locator("main img").all()){
   await img.scrollIntoViewIfNeeded();
   await expect.poll(()=>img.evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(100);
-  expect(await img.getAttribute("src")).toMatch(/^\/white-house-kaspiysk\/images\//);
+  expect(await img.getAttribute("src")).toMatch(/^\/white-house\/images\//);
  }
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.evaluate(()=>window.scrollTo(0,0));
@@ -18,7 +18,7 @@ test("published directory supports photos, navigation, cart and refresh",async({
  await page.getByRole("button",{name:"Костюмы",exact:true}).click();
  await expect(page.locator(".product-card")).toHaveCount(3);
  await page.getByRole("link",{name:"Классический костюм",exact:true}).click();
- await expect(page).toHaveURL(/\/white-house-kaspiysk\/product\/classic-suit$/);
+ await expect(page).toHaveURL(/\/white-house\/product\/classic-suit$/);
  await expect(page.getByRole("heading",{name:"Классический костюм",exact:true})).toBeVisible();
  expect((await page.reload())?.status()).toBe(200);
  await page.getByRole("button",{name:"M",exact:true}).click();

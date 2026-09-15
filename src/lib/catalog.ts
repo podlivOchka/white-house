@@ -5,6 +5,7 @@ export const defaults:Filters={category:"Все",query:"",color:"",maxPrice:1400
 export function selectProducts(filters:Filters,view:View="all",favorites:string[]=[]){
 const q=filters.query.toLocaleLowerCase("ru-RU").trim().replace(/ё/g,"е");
 return products.filter(p=>{
+if(p.hidden)return false;
 if(view==="promo")return false;
 if(view==="new"&&!p.isNew)return false;
 if(view==="collection"&&!p.collection)return false;

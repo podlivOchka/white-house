@@ -3,7 +3,7 @@ on:
   pull_request:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: storefront-${{ github.ref }}
   cancel-in-progress: true
@@ -17,7 +17,7 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
       - name: Install locked dependencies
         run: |
           if test -f package-lock.json; then
@@ -49,15 +49,3 @@ jobs:
           name: white-house-website
           path: dist/
           retention-days: 90
-      - name: Preserve verified images and dependency lockfile
-        if: success() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          SOURCE_BRANCH: ${{ github.head_ref }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json public/images/
-          if ! git diff --cached --quiet; then
-            git commit -m "Store verified catalog images and dependency lockfile"
-            git push origin "HEAD:${SOURCE_BRANCH}"
-          fi

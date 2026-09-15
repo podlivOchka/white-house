@@ -25,6 +25,9 @@
     "tests",
     "vite.config.ts",
     "playwright.config.ts",
-    "playwright.pages.config.ts"
+    "playwright.pages.config.ts",
+    "server",
+    "shared",
+    "netlify/functions"
   ]
 }

@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      VITE_BASE_PATH: /white-house-kaspiysk/
+      VITE_BASE_PATH: /${{ github.event.repository.name }}/
       VITE_PREVIEW: "true"
-      VITE_SITE_URL: https://podlivochka.github.io/white-house-kaspiysk/
+      VITE_SITE_URL: https://podlivochka.github.io/${{ github.event.repository.name }}/
+      VITE_STATIC_PREVIEW: "true"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
