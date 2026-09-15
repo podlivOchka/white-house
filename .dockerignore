@@ -1,0 +1,11 @@
+.git
+node_modules
+dist
+.netlify
+.env
+.env.*
+data
+backups
+test-results
+playwright-report*
+*.log

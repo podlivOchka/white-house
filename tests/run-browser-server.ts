@@ -1,0 +1,12 @@
+import {mkdtemp,rm} from "node:fs/promises";
+import {tmpdir} from "node:os";
+import {join} from "node:path";
+import {createApp} from "../server/index.ts";
+import {hashPassword,setAdministrator} from "../server/auth.ts";
+import {testAccount} from "./test-account.ts";
+const directory=await mkdtemp(join(tmpdir(),"white-house-browser-"));
+const {server,db}=await createApp({dataDir:directory,origin:"http://127.0.0.1:4173",distDir:"./dist"});
+setAdministrator(db,testAccount.email,await hashPassword(testAccount.password));
+server.listen(4173,"127.0.0.1");
+const stop=()=>server.close(async()=>{db.close();await rm(directory,{recursive:true,force:true});process.exit(0);});
+process.on("SIGTERM",stop);process.on("SIGINT",stop);

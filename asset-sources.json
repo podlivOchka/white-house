@@ -1,0 +1,42 @@
+{
+  "source": "https://whitehouse-kaspiysk.netlify.app/",
+  "note": "Фотографии и названия предоставлены владельцем через сайт-образец. Права на повторное использование подтверждает владелец. Цены и наличие уточняются у магазина.",
+  "images": [
+    {
+      "file": "public/images/photo-01.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-01.jpg"
+    },
+    {
+      "file": "public/images/photo-06.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-06.jpg"
+    },
+    {
+      "file": "public/images/photo-07.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-07.jpg"
+    },
+    {
+      "file": "public/images/photo-08.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-08.jpg"
+    },
+    {
+      "file": "public/images/photo-09.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-09.jpg"
+    },
+    {
+      "file": "public/images/photo-10.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-10.jpg"
+    },
+    {
+      "file": "public/images/photo-11.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-11.jpg"
+    },
+    {
+      "file": "public/images/photo-12.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-12.jpg"
+    },
+    {
+      "file": "public/images/photo-13.jpg",
+      "url": "https://whitehouse-kaspiysk.netlify.app/img/photo-13.jpg"
+    }
+  ]
+}

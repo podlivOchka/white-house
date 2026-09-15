@@ -1,0 +1,51 @@
+name: Storefront checks
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: storefront-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install locked dependencies
+        run: |
+          if test -f package-lock.json; then
+            npm ci
+          else
+            npm install
+          fi
+      - name: Validate calculations
+        run: npm test
+      - name: Build production storefront
+        run: npm run build
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Verify desktop and mobile journeys
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: storefront-test-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 30
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: white-house-website
+          path: dist/
+          retention-days: 90

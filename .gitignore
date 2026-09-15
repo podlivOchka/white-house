@@ -1,0 +1,16 @@
+node_modules/
+.netlify/
+dist/
+playwright-report/
+playwright-report-pages/
+test-results/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+.netlify/
+/data/
+/backups/
+.env.server

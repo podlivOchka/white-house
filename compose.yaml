@@ -1,0 +1,41 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        VITE_SITE_URL: ${SITE_URL:?Set SITE_URL in .env}
+    init: true
+    restart: unless-stopped
+    environment:
+      SITE_URL: ${SITE_URL:?Set SITE_URL in .env}
+      TRUST_PROXY: "1"
+    volumes:
+      - ./data:/app/data
+    expose:
+      - "3000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+volumes:
+  caddy_data:
+  caddy_config:
