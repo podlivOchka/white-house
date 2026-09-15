@@ -2,6 +2,8 @@
 
 Проект: https://github.com/podlivOchka/white-house. Сервер запускает сайт, API и вход администратора. Товары и предложения находятся в SQLite, фотографии — в папке `data/images`. Они сохраняются при перезапуске и обновлении контейнера. Пароли хранятся только в виде хеша scrypt, сессии — в HttpOnly cookie. Публичной регистрации нет.
 
+Для первого запуска на компьютере с Windows 10 есть [отдельная инструкция](WINDOWS10.md). Ниже описано размещение с Docker и HTTPS.
+
 ## Что нужно для запуска
 
 - Сервер Linux с Docker Engine и Docker Compose. Можно использовать арендованный VPS или свой постоянно включённый компьютер с публичным адресом.
@@ -12,7 +14,7 @@
 ## Первый запуск
 
 ```sh
-git clone --branch site/initial-catalog https://github.com/podlivOchka/white-house.git
+git clone --branch main https://github.com/podlivOchka/white-house.git
 cd white-house
 cp .env.example .env
 ```
@@ -58,7 +60,7 @@ docker compose exec app npm run admin:set -- --email новый-адрес@examp
 ## Обновить код
 
 ```sh
-git pull --ff-only origin site/initial-catalog
+git pull --ff-only origin main
 docker compose up -d --build
 ```
 
