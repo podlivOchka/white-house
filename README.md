@@ -41,7 +41,7 @@ GitHub Actions выполняет эти проверки при открыти�
 
 ## Предпросмотр через GitHub Pages
 
-Workflow Pages preview публикует содержимое ветки main. В настройках репозитория Settings → Pages выберите Source → GitHub Actions. Для Pages из приватного личного репозитория нужен GitHub Pro. Сам репозиторий можно оставить приватным; опубликованная страница будет открываться по ссылке.
+Workflow Pages preview публикует содержимое отдельной ветки site/initial-catalog. В настройках репозитория Settings → Pages выберите Source → GitHub Actions. Для Pages из приватного личного репозитория нужен GitHub Pro. Сам репозиторий можно оставить приватным; опубликованная страница будет открываться по ссылке.
 
 Адрес после успешной публикации: https://podlivochka.github.io/white-house-kaspiysk/
 

@@ -2,7 +2,7 @@ name: Pages preview
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [site/initial-catalog]
 permissions:
   contents: read
 concurrency:
