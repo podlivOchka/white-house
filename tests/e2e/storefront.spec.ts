@@ -3,7 +3,7 @@ test("catalog loads its images with no page errors or horizontal overflow",async
 const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
 await page.goto("/catalog");await expect(page.locator(".product-card")).toHaveCount(8);
 for(const image of await page.locator("main img").all()){await image.scrollIntoViewIfNeeded();await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(100);}
-await page.evaluate(()=>window.scrollTo(0,0));expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);expect(errors).toEqual([]);
+await page.evaluate(()=>window.scrollTo(0,0));expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);expect(errors).toEqual([]);
 await expect(page.locator("body")).not.toContainText(/chatgpt|openai|codex|нейросет|искусственный интеллект/i);
 await page.screenshot({path:testInfo.outputPath("catalog.png"),fullPage:true});
 });

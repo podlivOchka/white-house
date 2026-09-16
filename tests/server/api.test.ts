@@ -1,3 +1,5 @@
+import fixture from "../fixtures/catalog.json" with {type:"json"};
+import {validateCatalog} from "../../shared/catalog.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {mkdtemp,rm,writeFile,mkdir,readFile} from "node:fs/promises";
@@ -12,6 +14,7 @@ import type {CatalogData} from "../../shared/catalog.ts";
 test("admin authentication, inventory edits and persistent storage work together",async t=>{
   const dir=await mkdtemp(join(tmpdir(),"wh-api-"));const dist=join(dir,"dist");await mkdir(dist);await writeFile(join(dist,"app.html"),"<!doctype html><title>White House</title>");
   const origin="http://127.0.0.1:31991";const app=await createApp({dataDir:join(dir,"data"),origin,distDir:dist});
+  await app.store.save({...validateCatalog(fixture),revision:(await app.store.read()).revision});
   app.server.listen(0,"127.0.0.1");await once(app.server,"listening");const port=(app.server.address() as {port:number}).port;
   const base="http://127.0.0.1:"+port;let cookie="";
   const request=(path:string,init:RequestInit={})=>fetch(base+path,{...init,headers:{Origin:origin,Cookie:cookie,...init.headers}});

@@ -9,6 +9,12 @@ services:
     environment:
       SITE_URL: ${SITE_URL:?Set SITE_URL in .env}
       TRUST_PROXY: "1"
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_SECURE: ${SMTP_SECURE:-true}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
     volumes:
       - ./data:/app/data
     expose:

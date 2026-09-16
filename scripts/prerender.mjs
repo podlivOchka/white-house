@@ -1,6 +1,7 @@
 import {mkdir,readFile,writeFile} from "node:fs/promises";
 import {join} from "node:path";
-import {products,store} from "../src/data/catalog.ts";
+import {products as allProducts,store} from "../src/data/catalog.ts";
+const products=allProducts.filter(p=>!p.hidden);
 
 const template=await readFile("dist/index.html","utf8");
 await writeFile("dist/app.html",template);

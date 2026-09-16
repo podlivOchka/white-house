@@ -22,5 +22,5 @@ test("admin adds a product, marks it unavailable, hides it and removes it",async
 test("all three Instagram profiles have exact destinations",async({page})=>{
   await page.goto("/catalog");const profiles=page.getByRole("region",{name:"Профили магазина в Instagram"}).first();
   for(const handle of ["white_house_____","wh_collection__","wh_of_love"]){const link=profiles.locator(`a[href="https://www.instagram.com/${handle}/"]`);await expect(link).toHaveCount(1);await expect(link).toHaveAttribute("target","_blank");}
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
 });
