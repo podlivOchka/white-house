@@ -41,6 +41,8 @@
 .promo-products { width: 100%; margin-top: 45px; text-align: left; }
 .cart-whatsapp { justify-content: center; margin-top: 18px; font-size: 13px; }
 .checkout { padding: 0 30px 32px; }
+.modal.drawer > .checkout { min-height: 0; flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; }
+.checkout-submit { position: sticky; bottom: 0; z-index: 2; box-shadow: 0 -12px 18px #fff; }
 .checkout-back { margin: 0 0 28px; font-size: 12px; }
 .checkout h3 { font-weight: 400; font-size: 29px; margin: 14px 0; letter-spacing: -.03em; }
 .checkout-lead { color: #716b64; font-size: 14px; line-height: 1.7; }
@@ -83,6 +85,7 @@
   .related-products { margin: 32px 0 0; }
   .related-products h2 { font-size: 27px; }
   .checkout { padding: 0 22px 26px; }
+  .modal.drawer > .checkout { padding-bottom: max(26px, env(safe-area-inset-bottom)); }
   .checkout h3 { font-size: 27px; }
   .checkout-summary { flex-wrap: wrap; }
   .checkout input, .checkout textarea { font-size: 16px; }
