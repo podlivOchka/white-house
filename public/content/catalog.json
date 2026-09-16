@@ -6,11 +6,23 @@
       "category": "Платья",
       "price": 13000,
       "image": "/images/photo-06.jpg",
+      "images": [],
       "colors": [
         "Синий"
       ],
+      "description": "Длинное платье с мелким цветочным принтом, длинными рукавами и воланами по низу.",
       "label": "ХИТ",
-      "description": "Длинное платье с мелким цветочным принтом, длинными рукавами и воланами по низу."
+      "isNew": false,
+      "collection": false,
+      "hidden": false,
+      "availability": "out-of-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "satin-belt-suit",
@@ -18,13 +30,24 @@
       "category": "Костюмы",
       "price": 4700,
       "image": "/images/photo-07.jpg",
+      "images": [],
       "colors": [
         "Голубой",
         "Белый"
       ],
+      "description": "Светлый костюм с цветочным рисунком: жакет с короткими рукавами, длинная юбка и атласная лента на талии.",
       "label": "NEW",
       "isNew": true,
-      "description": "Светлый костюм с цветочным рисунком: жакет с короткими рукавами, длинная юбка и атласная лента на талии."
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "polka-dot-dress",
@@ -32,12 +55,23 @@
       "category": "Платья",
       "price": 10000,
       "image": "/images/photo-08.jpg",
+      "images": [],
       "colors": [
         "Чёрный"
       ],
+      "description": "Чёрное платье макси в мелкий белый горошек. V-образный вырез, рукава три четверти и разрез спереди.",
       "label": "NEW",
       "isNew": true,
-      "description": "Чёрное платье макси в мелкий белый горошек. V-образный вырез, рукава три четверти и разрез спереди."
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "satin-dresses",
@@ -45,13 +79,25 @@
       "category": "Платья",
       "price": 9000,
       "image": "/images/photo-09.jpg",
+      "images": [],
       "colors": [
         "Синий",
         "Белый",
         "Коричневый"
       ],
+      "description": "Атласное платье макси с мягкой драпировкой. На фотографии представлены три оттенка. Доступные цвета уточнит консультант.",
       "label": "ХИТ",
-      "description": "Атласное платье макси с мягкой драпировкой. На фотографии представлены три оттенка. Доступные цвета уточнит консультант."
+      "isNew": false,
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "linen-suit",
@@ -59,10 +105,22 @@
       "category": "Костюмы",
       "price": 14000,
       "image": "/images/photo-10.jpg",
+      "images": [],
       "colors": [
         "Бежевый"
       ],
-      "description": "Костюм песочного оттенка: рубашка-жакет с акцентом на талии и широкие брюки. Состав ткани уточняйте у консультанта."
+      "description": "Костюм песочного оттенка: рубашка-жакет с акцентом на талии и широкие брюки. Состав ткани уточняйте у консультанта.",
+      "isNew": false,
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "classic-suit",
@@ -70,12 +128,23 @@
       "category": "Костюмы",
       "price": 4500,
       "image": "/images/photo-11.jpg",
+      "images": [],
       "colors": [
         "Оливковый"
       ],
+      "description": "Костюм оливкового оттенка с жакетом и широкими брюками для повседневных и деловых образов.",
       "label": "NEW",
       "isNew": true,
-      "description": "Костюм оливкового оттенка с жакетом и широкими брюками для повседневных и деловых образов."
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "organza-cape",
@@ -83,12 +152,23 @@
       "category": "Накидки",
       "price": 6500,
       "image": "/images/photo-12.jpg",
+      "images": [],
       "colors": [
         "Чёрный"
       ],
+      "description": "Чёрная полупрозрачная накидка с поясом. Лёгкий верхний слой для многослойного образа. Состав и размеры уточнит консультант.",
       "label": "NEW",
       "isNew": true,
-      "description": "Чёрная полупрозрачная накидка с поясом. Лёгкий верхний слой для многослойного образа. Состав и размеры уточнит консультант."
+      "collection": false,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     },
     {
       "id": "wh-collection-dress",
@@ -96,12 +176,23 @@
       "category": "Платья",
       "price": null,
       "image": "/images/photo-13.jpg",
+      "images": [],
       "colors": [
         "Белый"
       ],
+      "description": "Светлое длинное платье с кружевной фактурой и открытыми плечами из WH Collection. Стоимость и детали заказа — у консультанта.",
       "label": "WH COLLECTION",
+      "isNew": false,
       "collection": true,
-      "description": "Светлое длинное платье с кружевной фактурой и открытыми плечами из WH Collection. Стоимость и детали заказа — у консультанта."
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": null,
+      "sizes": [],
+      "unavailableSizes": [],
+      "material": "",
+      "measurements": "",
+      "modelInfo": "",
+      "relatedIds": []
     }
   ],
   "promotions": [],
@@ -138,5 +229,5 @@
       }
     }
   },
-  "revision": 0
+  "revision": 1
 }
