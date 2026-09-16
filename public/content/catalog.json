@@ -193,6 +193,36 @@
       "measurements": "",
       "modelInfo": "",
       "relatedIds": []
+    },
+    {
+      "id": "83f650c3-9b1d-4ab3-a5c5-c9f6e18c4d43",
+      "name": "Платье",
+      "category": "Платья",
+      "price": 14000,
+      "image": "/images/uploads/304b474b-e347-44ea-9bdb-2f934e94c9a1.jpg",
+      "images": [
+        "/images/uploads/cc4134f5-aecf-4e60-8720-3f7bdafc7641.jpg"
+      ],
+      "colors": [
+        "Коричневый"
+      ],
+      "description": "Красивое коричневое платье",
+      "label": "NEW",
+      "isNew": false,
+      "collection": true,
+      "hidden": false,
+      "availability": "in-stock",
+      "oldPrice": 20000,
+      "sizes": [
+        "S",
+        "M",
+        "XL"
+      ],
+      "unavailableSizes": [],
+      "material": "Стирать при температуре не выше +20",
+      "measurements": "",
+      "modelInfo": "175",
+      "relatedIds": []
     }
   ],
   "promotions": [],
@@ -229,5 +259,5 @@
       }
     }
   },
-  "revision": 1
+  "revision": 2
 }
