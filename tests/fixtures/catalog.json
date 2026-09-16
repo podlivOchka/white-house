@@ -1,0 +1,142 @@
+{
+  "products": [
+    {
+      "id": "floral-dress",
+      "name": "Платье с цветочным принтом",
+      "category": "Платья",
+      "price": 13000,
+      "image": "/images/photo-06.jpg",
+      "colors": [
+        "Синий"
+      ],
+      "label": "ХИТ",
+      "description": "Длинное платье с мелким цветочным принтом, длинными рукавами и воланами по низу."
+    },
+    {
+      "id": "satin-belt-suit",
+      "name": "Костюм с атласным поясом",
+      "category": "Костюмы",
+      "price": 4700,
+      "image": "/images/photo-07.jpg",
+      "colors": [
+        "Голубой",
+        "Белый"
+      ],
+      "label": "NEW",
+      "isNew": true,
+      "description": "Светлый костюм с цветочным рисунком: жакет с короткими рукавами, длинная юбка и атласная лента на талии."
+    },
+    {
+      "id": "polka-dot-dress",
+      "name": "Платье в горошек",
+      "category": "Платья",
+      "price": 10000,
+      "image": "/images/photo-08.jpg",
+      "colors": [
+        "Чёрный"
+      ],
+      "label": "NEW",
+      "isNew": true,
+      "description": "Чёрное платье макси в мелкий белый горошек. V-образный вырез, рукава три четверти и разрез спереди."
+    },
+    {
+      "id": "satin-dresses",
+      "name": "Атласное платье",
+      "category": "Платья",
+      "price": 9000,
+      "image": "/images/photo-09.jpg",
+      "colors": [
+        "Синий",
+        "Белый",
+        "Коричневый"
+      ],
+      "label": "ХИТ",
+      "description": "Атласное платье макси с мягкой драпировкой. На фотографии представлены три оттенка. Доступные цвета уточнит консультант."
+    },
+    {
+      "id": "linen-suit",
+      "name": "Костюм изо льна",
+      "category": "Костюмы",
+      "price": 14000,
+      "image": "/images/photo-10.jpg",
+      "colors": [
+        "Бежевый"
+      ],
+      "description": "Костюм песочного оттенка: рубашка-жакет с акцентом на талии и широкие брюки. Состав ткани уточняйте у консультанта."
+    },
+    {
+      "id": "classic-suit",
+      "name": "Классический костюм",
+      "category": "Костюмы",
+      "price": 4500,
+      "image": "/images/photo-11.jpg",
+      "colors": [
+        "Оливковый"
+      ],
+      "label": "NEW",
+      "isNew": true,
+      "description": "Костюм оливкового оттенка с жакетом и широкими брюками для повседневных и деловых образов."
+    },
+    {
+      "id": "organza-cape",
+      "name": "Накидка из органзы",
+      "category": "Накидки",
+      "price": 6500,
+      "image": "/images/photo-12.jpg",
+      "colors": [
+        "Чёрный"
+      ],
+      "label": "NEW",
+      "isNew": true,
+      "description": "Чёрная полупрозрачная накидка с поясом. Лёгкий верхний слой для многослойного образа. Состав и размеры уточнит консультант."
+    },
+    {
+      "id": "wh-collection-dress",
+      "name": "Платье WH Collection",
+      "category": "Платья",
+      "price": null,
+      "image": "/images/photo-13.jpg",
+      "colors": [
+        "Белый"
+      ],
+      "label": "WH COLLECTION",
+      "collection": true,
+      "description": "Светлое длинное платье с кружевной фактурой и открытыми плечами из WH Collection. Стоимость и детали заказа — у консультанта."
+    }
+  ],
+  "promotions": [],
+  "content": {
+    "promoTitle": "Ваш следующий любимый образ",
+    "promoDescription": "Об актуальных акциях и специальных предложениях расскажет консультант магазина.",
+    "bonusText": "",
+    "orderEmail": "orders@example.test",
+    "banners": {
+      "home": {
+        "title": "СТИЛЬ —\nЭТО ЭМОЦИИ.",
+        "caption": "Одежда, в которой вы чувствуете себя собой",
+        "image": "/images/photo-01.jpg"
+      },
+      "catalog": {
+        "title": "ВАШ НОВЫЙ\nГАРДЕРОБ.",
+        "caption": "Платья, костюмы и особенные детали",
+        "image": "/images/photo-06.jpg"
+      },
+      "new": {
+        "title": "НОВЫЕ\nИСТОРИИ.",
+        "caption": "Последние поступления White House",
+        "image": "/images/photo-11.jpg"
+      },
+      "collection": {
+        "title": "WH\nCOLLECTION.",
+        "caption": "Собственные изделия White House",
+        "image": "/images/photo-13.jpg"
+      },
+      "promo": {
+        "title": "ОСОБЫЕ\nПРЕДЛОЖЕНИЯ.",
+        "caption": "Любимые вещи на особых условиях",
+        "image": "/images/photo-09.jpg"
+      }
+    }
+  },
+  "revision": 0
+}

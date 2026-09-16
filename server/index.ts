@@ -6,11 +6,14 @@ import {fileURLToPath} from "node:url";
 import {openDatabase} from "./database.ts";
 import {createAuth} from "./auth.ts";
 import {apiError,catalogApi,HttpError,json} from "./catalog-api.ts";
+import {createOrders} from "./orders.ts";
+import {smtpMailer,type OrderMailer} from "./mail.ts";
 
-export async function createApp(options:{dataDir:string;origin:string;distDir:string;trustProxy?:boolean}){
+export async function createApp(options:{dataDir:string;origin:string;distDir:string;trustProxy?:boolean;mailer?:OrderMailer|null}){
   const origin=new URL(options.origin).origin;
   if(process.env.NODE_ENV==="production"&&!origin.startsWith("https://"))throw new Error("Для production укажите SITE_URL с HTTPS");
   const {db,store}=await openDatabase(options.dataDir);const auth=createAuth(db,origin);const dist=resolve(options.distDir);
+  const orders=createOrders(db,store,options.mailer??null);
   const server=createServer(async(req,res)=>{
     try{
       const url=new URL(req.url??"/",origin);
@@ -21,6 +24,7 @@ export async function createApp(options:{dataDir:string;origin:string;distDir:st
       let response:Response;
       if(url.pathname==="/api/health"&&req.method==="GET")response=json({ok:true});
       else if(url.pathname.startsWith("/api/auth/"))response=await auth.handle(request,clientIp(req,options.trustProxy));
+      else if(url.pathname==="/api/orders"||url.pathname.startsWith("/api/admin/orders"))response=await orders.handle(request,clientIp(req,options.trustProxy),()=>!!auth.user(request));
       else if(url.pathname.startsWith("/api/"))response=await catalogApi(request,store,async()=>!!auth.user(request));
       else{
         if(req.method!=="GET"&&req.method!=="HEAD")throw new HttpError(405,"Метод не поддерживается");
@@ -43,12 +47,13 @@ export async function createApp(options:{dataDir:string;origin:string;distDir:st
     }catch(error){const response=apiError(error);res.writeHead(response.status,Object.fromEntries(response.headers));res.end(await response.text());}
   });
   server.requestTimeout=30000;server.headersTimeout=15000;
-  return {server,db,store};
+  server.on("listening",()=>orders.start());server.on("close",()=>orders.stop());
+  return {server,db,store,orders};
 }
 function clientIp(req:IncomingMessage,trustProxy=false){const forwarded=req.headers["x-forwarded-for"];return trustProxy&&typeof forwarded==="string"?forwarded.split(",").at(-1)!.trim():req.socket.remoteAddress??"unknown";}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   const port=Number(process.env.PORT||3000);const origin=process.env.SITE_URL||"http://localhost:"+port;
-  const {server,db}=await createApp({dataDir:process.env.DATA_DIR||"./data",origin,distDir:"./dist",trustProxy:process.env.TRUST_PROXY==="1"});
+  const {server,db}=await createApp({dataDir:process.env.DATA_DIR||"./data",origin,distDir:"./dist",trustProxy:process.env.TRUST_PROXY==="1",mailer:smtpMailer()});
   server.listen(port,process.env.BIND_HOST||"127.0.0.1",()=>console.log("White House: "+origin));
   const close=()=>server.close(()=>{db.close();process.exit(0);});process.on("SIGTERM",close);process.on("SIGINT",close);
 }

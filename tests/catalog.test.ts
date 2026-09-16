@@ -1,8 +1,10 @@
-import test from "node:test";
+import test,{beforeEach} from "node:test";
+import fixture from "./fixtures/catalog.json" with {type:"json"};
 import assert from "node:assert/strict";
-import {products} from "../src/data/catalog.ts";
+import {products,replaceProducts,type Product} from "../src/data/catalog.ts";
 import {defaults,selectProducts} from "../src/lib/catalog.ts";
 import {addLine,parseCart,parseFavorites,total,orderMessage,type CartLine} from "../src/lib/cart.ts";
+beforeEach(()=>replaceProducts(structuredClone(fixture.products) as Product[]));
 test("catalog contains the eight supplied models and correct collections",()=>{assert.equal(products.length,8);assert.equal(selectProducts(defaults,"new").length,4);assert.equal(selectProducts(defaults,"collection").length,1);assert.equal(selectProducts(defaults,"promo").length,0);});
 test("category, price, color and case-insensitive search compose correctly",()=>{assert.deepEqual(selectProducts({...defaults,category:"Костюмы",maxPrice:5000}).map(p=>p.id),["satin-belt-suit","classic-suit"]);assert.deepEqual(selectProducts({...defaults,query:"ГОРОШЕК"}).map(p=>p.id),["polka-dot-dress"]);assert.equal(selectProducts({...defaults,query:"черный"}).length,2);assert.equal(selectProducts({...defaults,color:"Синий"}).length,2);assert.equal(selectProducts({...defaults,maxPrice:0}).length,0);});
 test("unknown prices are kept last in both price sorts",()=>{const ascending=selectProducts({...defaults,sort:"price-asc"});const descending=selectProducts({...defaults,sort:"price-desc"});assert.equal(ascending[0].price,4500);assert.equal(descending[0].price,14000);assert.equal(ascending.at(-1)?.price,null);assert.equal(descending.at(-1)?.price,null);assert.ok(selectProducts({...defaults,maxPrice:13900}).every(p=>p.price!==null&&p.price<=13900));});

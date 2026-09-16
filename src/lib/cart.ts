@@ -1,4 +1,4 @@
-import {getProduct,money,sizes} from "../data/catalog.ts";
+import {getProduct,money,productSizes} from "../data/catalog.ts";
 export type CartLine={id:string;size:string;color:string;quantity:number};
 export const lineKey=(line:Pick<CartLine,"id"|"size"|"color">)=>JSON.stringify([line.id,line.size,line.color]);
 export function parseCart(value:unknown):CartLine[]{
@@ -7,7 +7,7 @@ const lines:CartLine[]=[];
 for(const item of value.slice(0,100)){
  if(!item||typeof item!=="object")continue;
  const p=getProduct(item.id);
- if(!p||p.availability==="out-of-stock"||!sizes.includes(item.size)||typeof item.color!=="string"||(!p.colors.includes(item.color)&&item.color!=="Уточнить цвет")||!Number.isInteger(item.quantity)||item.quantity<1||item.quantity>99)continue;
+ if(!p||p.availability==="out-of-stock"||!productSizes(p).includes(item.size)||p.unavailableSizes?.includes(item.size)||typeof item.color!=="string"||(!p.colors.includes(item.color)&&item.color!=="Уточнить цвет")||!Number.isInteger(item.quantity)||item.quantity<1||item.quantity>99)continue;
  const line={id:p.id,size:item.size,color:item.color,quantity:item.quantity};
  const same=lines.find(x=>lineKey(x)===lineKey(line));
  if(same)same.quantity=Math.min(99,same.quantity+line.quantity);else lines.push(line);
