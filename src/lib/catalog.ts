@@ -1,11 +1,12 @@
 import {products,discountPercent,type Category,type View} from "../data/catalog.ts";
 export type Sort="default"|"price-asc"|"price-desc"|"name";
-export type Filters={category:Category;query:string;color:string;maxPrice:number|null;sort:Sort};
-export const defaults:Filters={category:"Все",query:"",color:"",maxPrice:null,sort:"default"};
+export type Filters={category:Category;query:string;color:string;maxPrice:number|null;sort:Sort;inStockOnly:boolean};
+export const defaults:Filters={category:"Все",query:"",color:"",maxPrice:null,sort:"default",inStockOnly:false};
 export function selectProducts(filters:Filters,view:View="all",favorites:string[]=[]){
 const q=filters.query.toLocaleLowerCase("ru-RU").trim().replace(/ё/g,"е");
 return products.filter(p=>{
 if(p.hidden)return false;
+if(filters.inStockOnly&&p.availability==="out-of-stock")return false;
 if(view==="promo"&&!discountPercent(p))return false;
 if(view==="new"&&!p.isNew)return false;
 if(view==="collection"&&!p.collection)return false;
@@ -15,10 +16,10 @@ if(filters.color&&!p.colors.includes(filters.color))return false;
 if(filters.maxPrice!==null&&(p.price===null||p.price>filters.maxPrice))return false;
 return !q||[p.name,p.category,...p.colors].join(" ").toLocaleLowerCase("ru-RU").replace(/ё/g,"е").includes(q);
 }).sort((a,b)=>{
-if(a.price===null&&b.price===null)return 0;
 if(filters.sort==="price-asc")return (a.price??Infinity)-(b.price??Infinity);
 if(filters.sort==="price-desc")return (b.price??-Infinity)-(a.price??-Infinity);
 if(filters.sort==="name")return a.name.localeCompare(b.name,"ru");
-return 0;
+// Keep the administrator's order within each group, with available models first.
+return Number(a.availability==="out-of-stock")-Number(b.availability==="out-of-stock");
 });
 }
