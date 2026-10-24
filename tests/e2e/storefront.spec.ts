@@ -1,4 +1,61 @@
 import {test,expect} from "@playwright/test";
+test("home edits use real catalog images, remain visible with reduced motion and open the right collection",async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ const edits=page.getByRole("region",{name:"Ваш стиль. Ваша история."});
+ await expect(edits).toBeVisible();
+ await expect(edits.locator(".collection-edit")).toHaveCount(3);
+ for(const image of await page.locator("main img").all()){
+  await image.scrollIntoViewIfNeeded();
+  await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(100);
+ }
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
+ await page.evaluate(()=>window.scrollTo(0,0));
+ await page.screenshot({path:testInfo.outputPath("home-top.png")});
+ await page.screenshot({path:testInfo.outputPath("home.png"),fullPage:true});
+ await edits.getByRole("link",{name:/Новые истории/}).click();
+ await expect(page).toHaveURL(/catalog\/new$/);
+ await expect(page.locator(".product-card")).toHaveCount(4);
+});
+
+test("promotional products use the same filters and only show discounts supplied by the catalog",async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.route("**/api/catalog",async route=>{
+  const response=await route.fetch();const catalog=await response.json();
+  catalog.products[0].oldPrice=catalog.products[0].price*2;
+  await route.fulfill({response,json:catalog});
+ });
+ await page.goto("/catalog/promo");
+ await expect(page.locator(".product-card")).toHaveCount(1);
+ await expect(page.locator(".product-card .discount-tag")).toHaveText("−50%");
+ await expect(page.getByLabel("Сортировка каталога")).toBeVisible();
+ await expect(page.locator(".product-photo img")).toHaveJSProperty("complete",true);
+ await page.screenshot({path:testInfo.outputPath("promotions.png"),fullPage:true});
+ await page.getByRole("button",{name:"Костюмы",exact:true}).click();
+ await expect(page.locator(".product-card")).toHaveCount(0);
+ await page.getByRole("button",{name:"Вся одежда",exact:true}).click();
+ await expect(page.locator(".product-card")).toHaveCount(1);
+});
+
+test("availability can be applied and cleared in the same mobile and desktop filter drawer",async({page})=>{
+ await page.route("**/api/catalog",async route=>{
+  const response=await route.fetch();const catalog=await response.json();
+  catalog.products[0].availability="out-of-stock";
+  await route.fulfill({response,json:catalog});
+ });
+ await page.goto("/catalog");
+ await expect(page.locator(".product-card")).toHaveCount(8);
+ await expect(page.locator(".product-card").last()).toHaveAttribute("data-product-id","floral-dress");
+ await page.getByRole("button",{name:"Фильтры",exact:true}).click();
+ const drawer=page.getByRole("dialog",{name:"Фильтры",exact:true});
+ await drawer.getByRole("checkbox",{name:"Только в наличии",exact:true}).check();
+ await drawer.getByRole("button",{name:"Показать модели (7)",exact:true}).click();
+ await expect(page.locator(".product-card")).toHaveCount(7);
+ await expect(page.locator(".product-card--out")).toHaveCount(0);
+ await page.getByRole("button",{name:"Только в наличии",exact:true}).click();
+ await expect(page.locator(".product-card")).toHaveCount(8);
+});
+
 test("catalog loads its images with no page errors or horizontal overflow",async({page},testInfo)=>{
 const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
 await page.goto("/catalog");await expect(page.locator(".product-card")).toHaveCount(8);
@@ -47,4 +104,5 @@ await page.addInitScript(()=>{const tools=new Map<string,any>();Object.definePro
 await page.goto("/catalog");await expect.poll(()=>page.evaluate(()=>(window as any).catalogTestTools.size)).toBe(2);
 const result=await page.evaluate(()=>(window as any).catalogTestTools.get("filter_catalog").execute({category:"Костюмы",maxPrice:5000}));expect(result.products).toHaveLength(2);await expect(page.locator(".product-card")).toHaveCount(2);
 const invalid=await page.evaluate(()=>{try{(window as any).catalogTestTools.get("filter_catalog").execute({maxPrice:-1});return false;}catch{return true;}});expect(invalid).toBe(true);await expect(page.locator(".product-card")).toHaveCount(2);
+const invalidAvailability=await page.evaluate(()=>{try{(window as any).catalogTestTools.get("filter_catalog").execute({inStockOnly:"yes"});return false;}catch{return true;}});expect(invalidAvailability).toBe(true);
 });

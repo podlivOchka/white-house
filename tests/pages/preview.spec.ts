@@ -5,6 +5,46 @@ import {productSizes,money} from "../../src/data/catalog";
 const prefix="/white-house/",catalog=publicCatalog(validateCatalog(source)),products=catalog.products;
 const available=products.find(p=>p.availability!=="out-of-stock");
 
+test("home edits and availability filters also work under the GitHub Pages repository path",async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.goto("");
+ const edits=page.getByRole("region",{name:"Ваш стиль. Ваша история."});
+ if(products.length){
+  await expect(edits).toBeVisible();
+  for(const link of await edits.locator(".collection-edit").all())expect(await link.getAttribute("href")).toMatch(/^\/white-house\/catalog/);
+  for(const image of await page.locator("main img").all()){
+   await image.scrollIntoViewIfNeeded();await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(0);
+  }
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
+  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:testInfo.outputPath("home-pages-top.png")});await page.screenshot({path:testInfo.outputPath("home-pages.png"),fullPage:true});
+ }
+ await page.goto("catalog/");await page.getByRole("button",{name:"Фильтры",exact:true}).click();
+ const drawer=page.getByRole("dialog",{name:"Фильтры",exact:true});
+ await drawer.getByRole("checkbox",{name:"Только в наличии",exact:true}).check();
+ await drawer.getByRole("button",{name:/Показать модели/}).click();
+ await expect(page.locator(".product-card")).toHaveCount(products.filter(product=>product.availability!=="out-of-stock").length);
+ await expect(page.locator(".product-card--out")).toHaveCount(0);
+ await page.getByRole("button",{name:"Только в наличии",exact:true}).click();
+ await expect(page.locator(".product-card")).toHaveCount(products.length);
+});
+
+test("promotions remain a filterable catalog on the published site",async({page},testInfo)=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.goto("catalog/promo/");
+ const discounted=products.filter(product=>product.price!==null&&product.oldPrice&&product.oldPrice>product.price);
+ await expect(page.locator(".product-card")).toHaveCount(discounted.length);
+ await expect(page.getByRole("button",{name:"Фильтры",exact:true})).toBeVisible();
+ await expect(page.getByLabel("Сортировка каталога")).toBeVisible();
+ for(const image of await page.locator("main img").all()){
+  await image.scrollIntoViewIfNeeded();await expect.poll(()=>image.evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(0);
+ }
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1)).toBe(true);
+ await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:testInfo.outputPath("promotions-pages.png"),fullPage:true});
+ await page.getByRole("button",{name:"Фильтры",exact:true}).click();
+ const drawer=page.getByRole("dialog",{name:"Фильтры",exact:true});
+ await drawer.getByRole("checkbox",{name:"Только в наличии",exact:true}).check();
+ await drawer.getByRole("button",{name:/Показать модели/}).click();
+ await expect(page.locator(".product-card")).toHaveCount(discounted.filter(product=>product.availability!=="out-of-stock").length);
+});
+
 test("published catalog renders the current editable inventory and supports navigation",async({page},testInfo)=>{
  const failures:string[]=[];page.on("pageerror",error=>failures.push(error.message));
  page.on("response",response=>{if(response.url().startsWith("http://127.0.0.1:4174")&&response.status()>=400)failures.push(response.status()+" "+response.url());});
@@ -51,7 +91,7 @@ test("direct pages and 404 stay under the repository path after inventory edits"
  await page.getByRole("link",{name:"Открыть каталог",exact:true}).click();await expect(page.locator(".product-card")).toHaveCount(products.length);
 });
 
-test("static checkout prepares an email and never claims the order was sent",async({page})=>{
+test("static checkout prepares an email and never claims the order was sent",async({page},testInfo)=>{
  test.skip(!available,"No orderable products in the current catalog");const product=available!;
  const calls:string[]=[];page.on("request",req=>{if(req.method()==="POST")calls.push(req.url());});
  await page.goto("product/"+product.id+"/");
@@ -66,4 +106,7 @@ test("static checkout prepares an email and never claims the order was sent",asy
  expect(mail.searchParams.get("body")).toContain(product.name);expect(mail.searchParams.get("body")).toContain("Тестовый город, улица Пример, 1");
  await expect(panel).toContainText("после отправки письма");expect(calls).toEqual([]);
  expect(await page.evaluate(()=>JSON.stringify(localStorage))).not.toContain("Тестовый город");
+ await panel.getByRole("link",{name:"Открыть почту"}).scrollIntoViewIfNeeded();
+ await expect(panel.getByRole("link",{name:"Открыть почту"})).toBeInViewport();
+ await page.screenshot({path:testInfo.outputPath("static-checkout.png")});
 });
