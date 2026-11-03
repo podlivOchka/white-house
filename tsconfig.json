@@ -28,6 +28,5 @@
     "playwright.pages.config.ts",
     "server",
     "shared",
-    "netlify/functions"
   ]
 }

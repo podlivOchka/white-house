@@ -20,9 +20,8 @@
     "dev:server": "node --env-file-if-exists=.env --experimental-strip-types --watch server/index.ts"
   },
   "dependencies": {
-    "@netlify/blobs": "^11.1.0",
-    "@netlify/functions": "^6.0.0",
-    "@netlify/identity": "^2.0.0",
+    "@fontsource-variable/onest": "^5.3.1",
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "lucide-react": "1.31.0",
     "nodemailer": "^10.1.4",
     "radix-ui": "1.6.7",

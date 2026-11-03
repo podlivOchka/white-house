@@ -14,7 +14,7 @@
 - Preserve uploaded photos, hidden products, unavailable variants and server-side order storage.
 - GitHub Pages and the Node/SQLite server are separate supported modes. Preserve both.
 - Use `assetUrl` and router links so assets and routes also work below `/white-house/`.
-- The GitHub Pages checkout prepares an email for the customer to send. It must never report that an order was sent automatically.
+- The GitHub Pages checkout prepares an order for the customer to send by WhatsApp or email. It must never report that an order was sent automatically.
 - Only actual catalog old/new prices may produce product discount badges. Inactive promotions and hidden products must not be displayed.
 
 ## Security and accessibility
@@ -31,6 +31,6 @@
 - Install locked dependencies with `npm ci`.
 - Run `npm test`, `npm run build`, `npm run test:e2e` and `npm audit --audit-level=high`.
 - The server browser tests intentionally use an isolated eight-product fixture and temporary database. They must not edit the real catalog or send real email.
-- For Pages compatibility, build with `VITE_BASE_PATH=/white-house/`, `VITE_PREVIEW=true`, `VITE_STATIC_PREVIEW=true` and `VITE_ADMIN_BACKEND=github`, then run `npm run test:pages`.
+- For Pages compatibility, build with `VITE_BASE_PATH=/white-house/`, `VITE_PREVIEW=false`, `VITE_STATIC_PREVIEW=true` and `VITE_ADMIN_BACKEND=github`, then run `npm run test:pages`.
 - Inspect desktop and mobile screenshots, including the catalog, promotional catalog and checkout, before publishing.
 - Preserve unrelated owner changes. Publish through a reviewable branch and verify the deployment before presenting the public link as updated.
